@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="
+    width=device-width,
+    initial-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="css/ionic.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/ionic.bundle.js"></script>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body ng-controller="sideMenuCtrl">
+
+<ion-side-menus>
+    <ion-side-menu-content style="background:#f7f7d5;">
+        <ion-content class="login_bg">
+            <div class="row">
+                <div class="col-offset-33 col-center center">
+                    <button class="button button-outline button-light"style="top: 32em;"ng-click="login()">
+                        点击登录
+                    </button>
+                </div>
+            </div>
+        </ion-content>
+    </ion-side-menu-content>
+</ion-side-menus>
+
+<script>
+
+    var app = angular.module('myApp', ['ionic']);
+
+    app.controller('sideMenuCtrl',
+            ['$scope',
+                function ($scope) {
+
+                    $scope.login = function () {
+                       location='login.html';
+                    }
+
+                }]);
+
+</script>
+
+</body>
+</html>

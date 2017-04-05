@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="
+    width=device-width,
+    initial-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="css/ionic.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/ionic.bundle.js"></script>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style>
+        #file{
+            width:80px;
+            height:80px;
+            border:1px solid salmon;
+            cursor:pointer;
+            opacity:0;
+        }
+    </style>
+</head>
+<body ng-controller="sideMenuCtrl">
+
+<ion-side-menus>
+
+    <ion-side-menu-content>
+        <ion-content>
+            <form id="user_form"></form>
+            <!--<form action="./data/upload_file.php" method="post" enctype="multipart/form-data" id="upload"></form>-->
+            <div class="head"><!--<input type="file" form="user_form" id="file" name="file"/>--></div>
+
+            <div class="list list-inset input_transparent">
+                <label class="item item-input">
+                    <i class="icon ion-ios-person-outline placeholder-icon login_padding"></i>
+                    <input type="text" placeholder="请输入已验证的手机号或邮箱" form="user_form" name="uname">
+                </label>
+                <label class="item item-input">
+                    <i class="icon ion-ios-locked-outline placeholder-icon login_padding"></i>
+                    <input type="password" placeholder="请输入密码" form="user_form" name="upwd">
+                </label>
+                <p></p>
+                <div class="text-right"><i class="icon ion-ios-help-outline"></i> <span class="line">注册代表你已同意<a href="#" class="balanced" style="text-decoration: none">用户协议</a></span></div>
+                <button class="button button-block button-balanced" ng-click="register()">
+                    注册
+                </button>
+                <button class="button button-block button-outline button-balanced" style="background: #9be993;" ng-click="back()">
+                   返回登录
+                </button>
+            </div>
+        </ion-content>
+    </ion-side-menu-content>
+
+
+</ion-side-menus>
+
+<script src="js/main.js"></script>
+<script>
+
+    var app = angular.module('myApp', ['ionic']);
+
+    app.controller('sideMenuCtrl',
+            ['$scope',
+                function ($scope) {
+
+                    $scope.register= function () {
+                        $("form:last").submit();
+                        var datas=$( '#user_form').serialize();
+                        $.ajax({
+                            url : "data/register.php",
+                            type : "POST",
+                            data : datas,
+                            success : function(data) {
+                                if(data=="ok"){
+                                    var  datas=this.data.split("&");
+                                    for(var i= 0,d=[];i<datas.length;i++){
+                                        d.push(datas[i].split("="));
+                                    }
+                                    localStorage.uname=d[0][1];
+                                    localStorage.upwd=d[1][1];
+                                }
+//                                    location='./login.html';
+                            },
+                            error : function(data) {
+                                alert(data)
+                            }
+                        });
+                    }
+                    $scope.back = function () {
+                        location = './login.html';
+                    }
+
+                    $scope.upload = function () {
+
+                        console.log(file.value);
+                        console.log("jj");
+                        if(file.value!="") {
+                            $("form:last").submit();
+                        }
+                    }
+                }]);
+
+
+</script>
+
+</body>
+</html>

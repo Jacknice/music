@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="
+    width=device-width,
+    initial-scale=1,user-scalable=no"/>
+    <link rel="stylesheet" href="css/ionic.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <script src="js/ionic.bundle.js"></script>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body ng-controller="sideMenuCtrl">
+
+<ion-side-menus>
+
+    <ion-side-menu-content>
+        <ion-content>
+            <form action="demo_form.asp" method="get" id="user_form"></form>
+            <div class="head"></div>
+            <div class="list list-inset input_transparent">
+                <label class="item item-input">
+                    <i class="icon ion-ios-person-outline placeholder-icon login_padding"></i>
+                    <input type="text" placeholder="请输入名称" form="user_form" name="uname" ng-model="uname">
+                </label>
+                <label class="item item-input">
+                    <i class="icon ion-ios-locked-outline placeholder-icon login_padding"></i>
+                    <input type="password" placeholder="请输入密码" form="user_form" name="upwd" ng-model="upwd">
+                </label>
+                <p></p>
+                <div class="text-right"><label for="forget"><input name="forget" id="forget" type="checkbox" style="vertical-align: middle"/>忘记密码</label></div>
+                <button class="button button-block button-balanced" ng-click="login()">
+                    登录
+                </button>
+                <button class="button button-block button-outline button-balanced" style="background: #9be993;" ng-click="register()">
+                    注册
+                </button>
+            </div>
+        </ion-content>
+    </ion-side-menu-content>
+
+
+</ion-side-menus>
+
+<script src="js/main.js"></script>
+<script>
+    var app = angular.module('myApp', ['ionic']);
+    app.controller('sideMenuCtrl',['$scope',
+            function ($scope) {
+                $scope.uname=localStorage.uname;
+                console.log(localStorage.uname);
+                $scope.upwd=localStorage.upwd;
+                $scope.login = function () {
+                    $.ajax({
+                        url : "data/login.php",
+                        type : "POST",
+                        data : $( '#user_form').serialize(),
+                        success : function(data) {
+                            location = './first.html';
+                            console.log(data);
+                        },
+                        error : function(data) {
+                            alert(data);
+                        }
+                    });
+                }
+                $scope.register = function () {
+                    location = './register.html';
+                }
+
+            }]);
+
+
+
+</script>
+
+</body>
+</html>
